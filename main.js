@@ -1,30 +1,38 @@
-const input = document.querySelector('input');
-const hideWord = document.querySelector('.secret');
-const btnCheck = document.querySelector('.check');
+"use strict";
 
-const wordsList = ['humanidad','humano','persona','gente','hombre','mujer','bebé','niño','niña',
-    'adolescente','adulto','adulta','anciano','anciana','don','doña','señor','señora','caballero',
-    'dama','individuo'];
+const btnIniciar = document.querySelector(".inicio");
+const btnAgregarNueva = document.querySelector(".agregar");
+const tablero = document.querySelector(".contain");
+const palabraContent = document.querySelector(".word");
 
-const wordIndex = Math.floor(Math.random() * wordsList.length - 1);
-const randomWord = wordsList[wordIndex];
-const randomWordArr = randomWord.split('')
+const palabras = ["PERRO", "AUTO", "GALLINA", "AIRE", "CASA", "NOCHE"];
+const pattern = new RegExp("^[A-Z]+$", "i");
+let palabraOculta = "";
 
+const dibujarTablero = () => {
+  tablero.style.opacity = 1;
+};
 
-let wordHide = [];
+const crearPalabraSecreta = (palabras) => {
+  const indicePalabra = Math.floor(Math.random() * palabras.length);
+  const palabraSecreta = palabras[indicePalabra];
 
+  return palabraSecreta;
+};
 
-for(let letter of randomWordArr){
-	wordHide.push(' _')
-}
-hideWord.textContent = `${wordHide.join('')}`
-const checkWord = function(ch){
-	
-}
+const mostrarGuiones = (palabra) => {
+  palabraOculta = "_ ".repeat(palabra.length);
+  console.log(palabraOculta);
+  palabraContent.textContent = palabraOculta;
+};
 
+btnIniciar.addEventListener("click", (e) => {
+  e.preventDefault();
+});
+dibujarTablero();
+crearPalabraSecreta(palabras);
+mostrarGuiones(crearPalabraSecreta(palabras));
 
-btnCheck.addEventListener('click', () => {
-	const chart = input.value;
-	checkWord(chart);
-	input.value = '';
+document.addEventListener("keydown", (e) => {
+  if (pattern.test(e.key)) console.log(e.key);
 });

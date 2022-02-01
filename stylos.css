@@ -29,7 +29,9 @@ img {
 
 .container {
   width: 90%;
-  display: felex;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
@@ -63,16 +65,18 @@ img {
 }
 
 .contain {
-  max-width: 120rem;
-  height: 80rem;
-  border: 1px solid orange;
-  background-color: rgba(246, 246, 246, 0.1);
+  min-width: 120rem;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  background-color: rgba(25, 143, 197, 0.1);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 80rem;
+  place-items: center;
   gap: 1rem;
   transition: all 0.5s ease-in-out;
   /* Esto cambiara con javascript */
-  /* opacity: 0; */
+  opacity: 0;
 }
 
 .contain .word_container {
@@ -85,6 +89,7 @@ img {
 }
 .contain .word_container .word {
   font-size: 4.5rem;
+  letter-spacing: 6px;
 }
 .contain .word_container .letters {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
