@@ -2,24 +2,31 @@
 
 const btnIniciar = document.querySelector(".inicio");
 const btnAgregarNueva = document.querySelector(".agregar");
+const btnJugarDenuevo = document.querySelector(".nuevo");
 const tablero = document.querySelector(".contain");
 const palabraContent = document.querySelector(".word");
 const palabrasIncorrectasContent = document.querySelector(".letters");
+const contador = document.querySelector(".counter");
+const img = document.querySelector("#ahorcado");
 
 const palabras = ["PERRO", "AUTO", "GALLINA", "AIRE", "CASA", "NOCHE"];
 const pattern = new RegExp("^[A-Z]+$", "i");
-const palabraIncorrectaArr = [];
+let palabraIncorrectaArr = [];
 let palabraOculta = "";
-let letrasIncorrectas = [];
+let palabraIncorrecta = "";
 let palabraRandom = "";
+let intentos = 0;
+let finJuego = false;
 
 // Funcion para dibujar tablero
 const dibujarTablero = () => {
   tablero.style.opacity = 1;
+
   crearPalabraSecreta(palabras);
   palabraRandom = crearPalabraSecreta(palabras);
   mostrarGuiones(palabraRandom);
   verificarLetra(palabraRandom);
+  dibujarAhorcado();
 };
 
 // Crear palabra secreta
@@ -60,17 +67,49 @@ const dibujarLetraCorrecta = (letra) => {
   palabraContent.textContent = palabraOculta;
 };
 
+// Dibujar palabra incorrecta
 const dinujarLetraIncorrecta = (letra) => {
-  if (!palabraRandom.includes(letra)) {
+  if (!palabraRandom.includes(letra) && !palabraIncorrectaArr.includes(letra)) {
     palabraIncorrectaArr.push(letra);
+    intentos += 1;
+    contadorIntentos(intentos);
   }
 
-  const palabraIncorrecta = palabraIncorrectaArr.join(" ");
+  palabraIncorrecta = palabraIncorrectaArr.join(" ");
+  palabrasIncorrectasContent.style.opacity = 1;
   palabrasIncorrectasContent.textContent = palabraIncorrecta;
+};
+
+// Dibujar ahorcado
+const dibujarAhorcado = () => {
+  img.setAttribute("src", `img/${intentos}.png`);
+};
+
+// Fin del juego
+const juegoTerminado = () => {
+  finJuego = true;
+};
+console.log(finJuego);
+// Contador de intentos
+const contadorIntentos = (intentos) => {
+  if (intentos <= 9) {
+    contador.textContent = `${intentos} / 9`;
+    dibujarAhorcado();
+  } else {
+    juegoTerminado();
+  }
 };
 
 // Iniciar nuertro juego
 btnIniciar.addEventListener("click", (e) => {
   e.preventDefault();
+  dibujarTablero();
+  palabraIncorrectaArr = [];
+  palabraIncorrecta = "";
+  palabrasIncorrectasContent.textContent = palabraIncorrecta;
+  intentos = 0;
+  contador.textContent = `${intentos} / 9`;
+  img.setAttribute("src", `img/${intentos}.png`);
 });
-dibujarTablero();
+
+// btnJugarDenuevo.addEventListener("click", () => {});

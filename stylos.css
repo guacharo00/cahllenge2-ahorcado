@@ -29,6 +29,7 @@ img {
 
 .container {
   width: 90%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -47,7 +48,7 @@ img {
   color: #00a2ff;
   text-shadow: 1px 2px 3px rgba(22, 47, 61, 0.9);
 }
-.head .btn {
+.btn {
   min-width: 20rem;
   padding: 1rem 2rem;
   border: 1px solid #00a2ff;
@@ -59,19 +60,19 @@ img {
   cursor: pointer;
   transition: all 0.5s;
 }
-.head .btn:hover {
+.btn:hover {
   background-color: #00a2ff;
   color: #fff;
 }
 
 .contain {
-  min-width: 120rem;
+  min-width: 60%;
   border: 1px solid #ccc;
   border-radius: 1rem;
   background-color: rgba(25, 143, 197, 0.1);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 80rem;
+  grid-template-rows: 100%;
   place-items: center;
   gap: 1rem;
   transition: all 0.5s ease-in-out;
@@ -86,6 +87,7 @@ img {
   align-items: center;
   font-size: 2.5rem;
   color: rgba(22, 47, 61, 0.9);
+  transition: all 0.5s ease-in;
 }
 .contain .word_container .word {
   font-size: 4.5rem;
@@ -96,9 +98,14 @@ img {
     "Lucida Sans", Arial, sans-serif;
   font-size: 4rem;
   font-weight: 900;
+  opacity: 0;
 }
 .contain .word_container .message {
   color: rgba(133, 36, 81, 0.9);
+}
+
+.contain .word_container .nuevo {
+  /* opacity: 1; */
 }
 
 footer {
