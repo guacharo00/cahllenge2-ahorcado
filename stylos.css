@@ -101,11 +101,20 @@ img {
   opacity: 0;
 }
 .contain .word_container .message {
+  color: rgba(22, 47, 61, 0.9);
+  font-weight: 900;
+}
+
+.contain .word_container .lose {
   color: rgba(133, 36, 81, 0.9);
 }
 
+.contain .word_container .win {
+  color: rgba(52, 107, 41, 0.9);
+}
+
 .contain .word_container .nuevo {
-  /* opacity: 1; */
+  opacity: 0;
 }
 
 footer {

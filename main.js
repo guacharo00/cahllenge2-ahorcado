@@ -8,6 +8,7 @@ const palabraContent = document.querySelector(".word");
 const palabrasIncorrectasContent = document.querySelector(".letters");
 const contador = document.querySelector(".counter");
 const img = document.querySelector("#ahorcado");
+const messageText = document.querySelector(".message");
 
 const palabras = ["PERRO", "AUTO", "GALLINA", "AIRE", "CASA", "NOCHE"];
 const pattern = new RegExp("^[A-Z]+$", "i");
@@ -17,6 +18,9 @@ let palabraIncorrecta = "";
 let palabraRandom = "";
 let intentos = 0;
 let finJuego = false;
+let message = "";
+let gano = false;
+let perdio = false;
 
 // Funcion para dibujar tablero
 const dibujarTablero = () => {
@@ -27,6 +31,9 @@ const dibujarTablero = () => {
   mostrarGuiones(palabraRandom);
   verificarLetra(palabraRandom);
   dibujarAhorcado();
+  messageText.textContent = "Intenta Adivinar la palabra";
+  messageText.classList.remove("win");
+  messageText.classList.remove("lose");
 };
 
 // Crear palabra secreta
@@ -45,12 +52,16 @@ const mostrarGuiones = (palabra) => {
 // Verificar si es letra o numero
 const verificarLetra = (palabra) => {
   document.addEventListener("keypress", (e) => {
-    let letra = e.key;
-    letra = letra.toUpperCase();
-    if (pattern.test(letra)) {
-      dibujarLetraCorrecta(letra);
-      dinujarLetraIncorrecta(letra);
+    if (!gano && !perdio) {
+      let letra = e.key;
+      letra = letra.toUpperCase();
+      if (pattern.test(letra)) {
+        dibujarLetraCorrecta(letra);
+        dinujarLetraIncorrecta(letra);
+      }
     }
+
+    gano || perdio ? (btnJugarDenuevo.style.opacity = 1) : "";
   });
 };
 
@@ -65,14 +76,20 @@ const dibujarLetraCorrecta = (letra) => {
   });
   palabraOculta = palabraOclultaArr.join(" ");
   palabraContent.textContent = palabraOculta;
+  jugadorGana(palabraRandom);
 };
 
 // Dibujar palabra incorrecta
 const dinujarLetraIncorrecta = (letra) => {
-  if (!palabraRandom.includes(letra) && !palabraIncorrectaArr.includes(letra)) {
+  if (
+    !palabraRandom.includes(letra) &&
+    !palabraIncorrectaArr.includes(letra) &&
+    intentos < 9
+  ) {
     palabraIncorrectaArr.push(letra);
     intentos += 1;
     contadorIntentos(intentos);
+    jugadorPierde(intentos);
   }
 
   palabraIncorrecta = palabraIncorrectaArr.join(" ");
@@ -85,31 +102,63 @@ const dibujarAhorcado = () => {
   img.setAttribute("src", `img/${intentos}.png`);
 };
 
-// Fin del juego
-const juegoTerminado = () => {
-  finJuego = true;
-};
-console.log(finJuego);
 // Contador de intentos
 const contadorIntentos = (intentos) => {
   if (intentos <= 9) {
     contador.textContent = `${intentos} / 9`;
     dibujarAhorcado();
-  } else {
-    juegoTerminado();
+  }
+  return intentos;
+};
+
+// Fin del juego
+const jugadorGana = (palabra) => {
+  const palabraArr = palabraOculta.split(" ");
+  const palabraVerificar = palabraArr.join("");
+
+  if (palabra === palabraVerificar) {
+    gano = true;
+    console.log("Usuario Gano");
+    messageText.classList.add("win");
+    messageText.textContent = "!Felicidades 🎉, Has ganado!";
   }
 };
 
-// Iniciar nuertro juego
-btnIniciar.addEventListener("click", (e) => {
-  e.preventDefault();
-  dibujarTablero();
+// Jugador pierde
+const jugadorPierde = (intentos) => {
+  if (intentos >= 9) {
+    perdio = true;
+    console.log("Usuario Pierde");
+    messageText.classList.add("lose");
+    messageText.textContent = "!Has perdido 😵, intenta denuevo!";
+  }
+};
+
+// Resetear
+const resetear = () => {
   palabraIncorrectaArr = [];
   palabraIncorrecta = "";
   palabrasIncorrectasContent.textContent = palabraIncorrecta;
   intentos = 0;
   contador.textContent = `${intentos} / 9`;
   img.setAttribute("src", `img/${intentos}.png`);
-});
+  gano = false;
+  perdio = false;
+  btnJugarDenuevo.style.opacity = 0;
+};
 
-// btnJugarDenuevo.addEventListener("click", () => {});
+// mostrar boton jugar denuevo
+if (gano || perdio) btnJugarDenuevo.style.opacity = 1;
+
+// Iniciar nuertro juego
+btnIniciar.addEventListener("click", (e) => {
+  e.preventDefault();
+  // dibujarTablero();
+  resetear();
+});
+dibujarTablero();
+btnJugarDenuevo.addEventListener("click", () => {
+  dibujarTablero();
+  resetear();
+});
+// !Has perdido 😵, intenta denuevo!
