@@ -28,8 +28,8 @@ img {
 }
 
 .container {
-  width: 90%;
-  height: 100%;
+  width: 70%;
+  /* height: 100%; */
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
