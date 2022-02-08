@@ -13,7 +13,7 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.5rem;
   max-width: 100%;
-  max-height: 100vh;
+  height: 100vh;
   background-color: #f6f6f6;
 
   display: flex;
